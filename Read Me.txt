@@ -1,0 +1,74 @@
+Codeacademy Project Design a Database from Scratch
+Updates and Processes learned
+
+Contents
+1. Design and Plan
+2. Errors and Updates
+3. Reflection
+
+
+
+
+
+--
+1.
+--
+
+The challenge of this project was to design and populate a working database from scratch to gain experience doing something you would do in the role of a Data Engineer. The instructions where: Research a topic to build a database, build a database schema, populate your database, make necessary edits and reflect. 
+
+With my design I decided to create a mock car dealerships database that holds the information of their inventory, customer data, financing data, drivers license data, insurance and sales data. I wanted to CREATE TABLEs to showcase cardinality with "one-one", "one-many", and "many-many" table relationships. 
+
+
+
+
+--
+2.
+--
+
+During the implimentation of my database, I worked through my problems manipulating my postgres database with SQL instead of utilizing the GUI of Postbird. During my project I had also learned to utilize Postbird (recommended for the project) and VScode (where I finished the project and typed my code). While identifying errors or ways I felt my schema could be better, I spent time learning how to ALTER MY DATA through SQL instead of the interface which led to more time working in postgres, but I feel that I've gained valuable experience through this learning process.
+
+Many of my changes and updates involved ---
+
+-- Altering Table Names --
+  
+ALTER TABLEs 'car', 'buyer_information'
+	RENAMED TO 'car_inventory', 'customer_id'
+
+
+-- Changing Established PKEYS AND FKEYS across tables -- 
+  
+Having to remove two FORIEGN KEYs to remove the PRIMARY KEY, allowing me to update each table with the new PRIMARY KEY.
+
+Changed established PRIMARY KEY and FOREIGN KEYS from the 'customer_id' table from 'drivers_license_number' to 'customer_id.id' across all connected tables.
+
+
+-- Querying for Schema Information --
+ 
+```
+SELECT constraint_name, table_name
+FROM information_schema.constraint_column_usage
+WHERE table_name = 'customer_id' AND column_name = 'drivers_license_number'
+```
+
+
+-- Updating constraints within tables using --
+```
+SELECT column_name, data_type, character_maximum_length
+FROM information_schema.columns
+WHERE table_schema = 'public' AND table_name = 'your_table';
+```
+
+-- Use CRUD practice to DROP old fkey columns to ADD new fkey columns with new data types from varchar to integer --
+1. Create new column
+2. Update new column with converted values of old column
+3. verify data and drop old column
+4. rename new coloumn to old column
+
+
+
+--
+3. 
+--
+Reflecting on my work through this project. I would like to look more into my payment relationship, and possible turn the 'payment' table into a many-many table connecting payment_id and financing.
+
+Another project I would like to work on with this database is to create a script that will automatically input the data into the tables for me. While I can just input data into boxes or have it prompt me and asked for the necessary data it needs for the action I'm attempting to do.
