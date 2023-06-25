@@ -1,0 +1,67 @@
+/*Updated Tables for Codeacademy project*/
+CREATE TABLE company (
+  id integer,
+  company_name varchar(30),
+  country varchar(20),
+  PRIMARY KEY(id, company_name)
+  );
+  
+CREATE TABLE car_type (
+  type varchar(25) PRIMARY KEY,
+  seating integer
+  );
+
+CREATE TABLE car_inventory (
+  vin varchar(30) PRIMARY KEY,
+  make varchar(30) REFERENCES company(company_name) NOT NULL,
+  model varchar(30) NOT NULL,
+  car_type varchar(25) REFERENCES car_type(type) NOT NULL,
+  cargo_space integer,
+  msrp money NOT NULL
+  );
+
+CREATE TABLE insurance_company (
+  id integer,
+  name varchar(30) PRIMARY KEY,
+  address varchar(100) NOT NULL,
+  PRIMARY KEY(id, name)
+  );
+
+CREATE TABLE financing (
+  payment_id integer REFERENCES payment(id) PRIMARY KEY,
+  institution_id integer UNIQUE,
+  institution_name varchar(50) NOT NULL,
+  address varchar(100) NOT NULL
+  );
+
+CREATE TABLE payment (
+  id integer PRIMARY KEY,
+  type varchar(30) NOT NULL
+  );
+  
+CREATE TABLE customer_id (
+  id integer PRIMARY KEY,
+  name varchar(50) NOT NULL,
+  address varchar(100) NOT NULL
+);
+
+CREATE TABLE drivers_license (
+    customer_id integer REFERENCES customer_id(id) PRIMARY KEY,
+    dl_number varchar(50),
+    dl_state varchar (2),
+    current BOOL
+);
+  
+CREATE TABLE buyer_insurance (
+  buyer_id integer REFERENCES customer_id(id),
+  buyer_insurance varchar(30) REFERENCES insurance_company(name),
+  PRIMARY KEY(buyer_id, buyer_insurance)
+  );
+ 
+CREATE TABLE purchase_order (
+   buyer_id integer REFERENCES customer_id(id) NOT NULL,
+   car_vin varchar(30) REFERENCES car_inventory(vin) NOT NULL,
+   order_id integer PRIMARY KEY,
+   price money NOT NULL,
+   payment_id integer REFERENCES payment(id) NOT NULL
+   );
